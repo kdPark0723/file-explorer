@@ -1,5 +1,8 @@
 const fs = require('fs');
 const url = require('url');
+const config = require('./config');
+
+const publicDir = config.server.publicDir;
 
 function requestListener(request, response) {
     if (request.method !== 'GET') {
@@ -16,7 +19,7 @@ function requestListener(request, response) {
     
     console.log(`[${client.address}:${client.port}]: Request Get ${pathname}.`);
     
-    const fileSteam = fs.createReadStream(`./${pathname}`);
+    const fileSteam = fs.createReadStream(`${publicDir}/${pathname}`);
     
     fileSteam.on('error', () => {
                  response.writeHead(400, { 'Content-Type': 'text/html' });
